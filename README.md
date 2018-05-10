@@ -1,4 +1,6 @@
-# Victor Hugo
+# Victor Hugo 
+
+This is a fork of [Victor-Hugo](https://github.com/netlify/victor-hugo).
 
 **A Hugo boilerplate for creating truly epic websites**
 
