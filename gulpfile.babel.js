@@ -9,6 +9,9 @@ import cssnext from "postcss-cssnext";
 import BrowserSync from "browser-sync";
 import webpack from "webpack";
 import webpackConfig from "./webpack.conf";
+import svgstore from "gulp-svgstore";
+import svgmin from "gulp-svgmin";
+import inject from "gulp-inject";
 
 const browserSync = BrowserSync.create();
 
@@ -21,8 +24,8 @@ gulp.task("hugo", (cb) => buildSite(cb));
 gulp.task("hugo-preview", (cb) => buildSite(cb, hugoArgsPreview));
 
 // Build/production tasks
-gulp.task("build", ["css", "js", "fonts"], (cb) => buildSite(cb, [], "production"));
-gulp.task("build-preview", ["css", "js", "fonts"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
+gulp.task("build", ["css", "js", "svg", "fonts"], (cb) => buildSite(cb, [], "production"));
+gulp.task("build-preview", ["css", "js", "svg", "fonts"], (cb) => buildSite(cb, hugoArgsPreview, "production"));
 
 // Compile CSS with PostCSS
 gulp.task("css", () => (
@@ -47,16 +50,33 @@ gulp.task("js", (cb) => {
   });
 });
 
-// Move all fonts in a flattened directory
-gulp.task('fonts', () => (
+// Move all fonts into a flattened directory
+gulp.task("fonts", () => (
   gulp.src("./src/fonts/**/*")
     .pipe(flatten())
     .pipe(gulp.dest("./dist/fonts"))
     .pipe(browserSync.stream())
 ));
 
+// Optimize SVG and concatenate into single SVG
+gulp.task("svg", () => {
+  var svgs = gulp
+    .src("./src/svg/icons/*.svg")
+    .pipe(svgmin())
+    .pipe(svgstore({inlineSvg: true}));
+
+  function fileContents(filePath, file) {
+    return file.contents.toString();
+  }
+
+  return gulp
+    .src("./site/layouts/partials/svg.html")
+    .pipe(inject(svgs, {transform: fileContents}))
+    .pipe(gulp.dest("./site/layouts/partials/"));
+});
+
 // Development server with browsersync
-gulp.task("server", ["hugo", "css", "js", "fonts"], () => {
+gulp.task("server", ["hugo", "css", "js", "svg", "fonts"], () => {
   browserSync.init({
     server: {
       baseDir: "./dist"
@@ -65,6 +85,7 @@ gulp.task("server", ["hugo", "css", "js", "fonts"], () => {
   gulp.watch("./src/js/**/*.js", ["js"]);
   gulp.watch("./src/css/**/*.css", ["css"]);
   gulp.watch("./src/fonts/**/*", ["fonts"]);
+  gulp.watch("./src/svg/icons/*.svg", ["svg"]);
   gulp.watch("./site/**/*", ["hugo"]);
 });
 

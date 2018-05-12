@@ -1,2 +1,2 @@
-[wordCount]
-other = "{{ .WordCount }} words"
+[head_title]
+other = "Monolingual"

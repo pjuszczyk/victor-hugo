@@ -1,9 +1,5 @@
 # Victor Hugo
 
-**This is a fork of [Victor-Hugo](https://github.com/netlify/victor-hugo)**
-
-I have added some updates and optimizations. This works with my [Docker for Victor-Hugo](https://github.com/pjuszczyk/docker-victor-hugo).
-
 **A Hugo boilerplate for creating truly epic websites**
 
 This is a boilerplate for using [Hugo](https://gohugo.io/) as a static site generator and [Gulp](https://gulpjs.com/) + [Webpack](https://webpack.js.org/) as your asset pipeline.
@@ -11,6 +7,20 @@ This is a boilerplate for using [Hugo](https://gohugo.io/) as a static site gene
 Victor Hugo setup to use [PostCSS](http://postcss.org/) and [Babel](https://babeljs.io/) for CSS and JavaScript compiling/transpiling.
 
 This project is released under the [MIT license](LICENSE). Please make sure you understand its implications and guarantees.
+
+## Changes
+
+This is a fork of [Victor-Hugo](https://github.com/netlify/victor-hugo). I have added some updates and optimizations. This works with my [Docker for Victor-Hugo](https://github.com/pjuszczyk/docker-victor-hugo).
+
+### SVG
+
+All SVG icons stored in `src/svg/icons` folder are automatically optimized with SVGO (gulp-svgmin) and concatenated into a single SVG sprite stored as a a partial called `svg.html`. Refer to an SVG via the `<use>` tag like so:
+
+```
+<svg width="16px" height="16px" class="db">
+  <use xlink:href="#SVG-ID"></use>
+</svg>
+```
 
 ## Usage
 
