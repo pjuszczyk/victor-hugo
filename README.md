@@ -10,7 +10,7 @@ This project is released under the [MIT license](LICENSE). Please make sure you 
 
 ## Changes
 
-This is a fork of [Victor-Hugo](https://github.com/netlify/victor-hugo). I have added some updates and optimizations. This works with [Docker for Victor Hugo](https://github.com/pjuszczyk/docker-victor-hugo).
+This is a fork of [Victor Hugo](https://github.com/netlify/victor-hugo). I have added some updates and optimizations. This works with [Docker for Victor Hugo](https://github.com/pjuszczyk/docker-victor-hugo).
 
 ### SVG
 
